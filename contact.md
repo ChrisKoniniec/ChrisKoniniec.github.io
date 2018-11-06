@@ -3,21 +3,9 @@ layout: default
 is_contact: true
 ---
 
-* Email: [foo@xyz.com](mailto:foo@xyz.com)
+* Email: [ckoninec@gmail.com](mailto:ckoninec@gmail.com)
 
-* Phone: [+91-123123](tel:+91-123123)
-
----
-
-## Mailing Address
-
-> 221B, Baker Street
->
-> London
->
-> United Kingdom
-
----
+* Phone: [+510-557-9327](tel:+510-557-9327)
 
 ## Social
 
