@@ -4,7 +4,7 @@ layout: default
 
 ## About Me
 
-<img class="profile-picture" src="">
+<img src="https://i.imgur.com/8Tw0RcA.jpg" title="source: imgur.com" /></a>
 
 Hi! I am a graduate of University of California, Irvine with a B.A. in Cognitive Psychology and a minor in Biology. 
 
