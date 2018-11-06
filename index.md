@@ -4,20 +4,18 @@ layout: default
 
 ## About Me
 
-<img class="profile-picture" src="sherlock.jpg">
+<img class="profile-picture" src="ChrisKoniniec_Sm.jpg">
 
-Hi! I am a junior year student of B.E. Computer Science at Birla Institute of Technology and Science, Pilani.
+Hi! I am a graduate of University of California, Irvine with a B.A. in Cognitive Psychology and a minor in Biology.
 
-This is a jekyll based resume template. You can find the full source code on [GitHub](https://github.com/bk2dcradle/researcher)
+My interests (outside of data science) are snowboarding, cycling, cooking, weight lifting, judo, reading (SciFi/Fantasy nerd), and video games.
 
 ## Research Interest
 
-Lorem ipsum dolor sit amet, consectetur adipiscing elit. Aliquam finibus ipsum ac erat aliquam dapibus. Vestibulum vehicula placerat ex, a consectetur odio pharetra quis. Mauris id urna ante. Fusce pharetra diam ac nisi aliquet, vel egestas ex iaculis. Pellentesque laoreet cursus tellus sed pellentesque. Praesent a rhoncus elit. Nunc ipsum nisl, consequat sit amet pretium quis, gravida id ipsum.
+Many of my research interests stem from a year and a half working as a research assistant at the UCI Working Memory and Plasticity Lab. They include: working memory, learning, brain plasticity, and video game studies. I am also interested in personality factors (Big 5/ Grit) and epistemology of personality factors and intelligence testing.
 
 ## Publications
 
-1. F.Bar, J.Doe: Effects of having a placeholder of a name
-2. S.Holmes, J.Watson: Consequences of living with a sociopath in London
 
 ## Typography
 
@@ -40,6 +38,3 @@ Here is a blockquote
 > To a great mind, nothing is little
 
 ## References
-
-* Foo Bar: Head of Department, Placeholder Names, Lorem
-* John Doe: Associate Professor, Department of Computer Science, Ipsum
