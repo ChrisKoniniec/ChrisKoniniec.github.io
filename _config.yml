@@ -1,22 +1,18 @@
 title: Chris Koniniec
-url: "https://ChrisKoniniec.com"
-baseurl: "/researcher"
+
 
 markdown: kramdown
 
 tracking_id: #
 
 footer: yes
-footer_url: "https://github.com/ChrisKoniniec"
+footer_url: "ChrisKoniniec.github.io"
 
 sass:
     style: compressed
     sass_dir: _sass
 
 nav:
- - name: "About"
-   link: "/researcher/"
  - name: "Resume"
-   link: "resume.pdf"
- - name: "Contact"
-   link: "contact"
+   link: ""
+ 
