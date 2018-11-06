@@ -4,7 +4,7 @@ layout: default
 
 ## About Me
 
-<img src="https://i.imgur.com/8Tw0RcA.jpg" title="source: imgur.com" />
+<img class="profile-picture" src="ChrisKoniniec_SM.jpg">
 
 Hi! I am a graduate of University of California, Irvine with a B.A. in Cognitive Psychology and a minor in Biology. 
 
