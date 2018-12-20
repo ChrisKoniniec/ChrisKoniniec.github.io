@@ -1,4 +1,3 @@
-
 ---
 layout: post
 title: Predicting Utility Site Disruptions
@@ -132,5 +131,7 @@ After some hyperparameter tuning, we can increase this to 63% chance that a 2 is
 ![Graph6](/assets/Project1/ConfMatrix1.png)
 
 ![Graph7](/assets/Project1/ConfMatrix2.png)
+
+Graphs made by using matplotlib, seaborn, and yellowbrick.
 
 Link to Jupyter notebook may be coming soon here, or can be sent upon request.
