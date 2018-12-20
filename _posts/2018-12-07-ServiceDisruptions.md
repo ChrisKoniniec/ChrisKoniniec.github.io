@@ -13,35 +13,36 @@ Our business question in this situation is that a Utility company wants to predi
 Each service station has a fault severity of 0 (no issues), 1 (minor issues), or 2 (major issue). The other data that are given to us are fairly abstract in nature, but we know each observation is a single instance of a service check on the station.
 
 
-'''
+
+```
 #import libraries
 import pandas as pd
 import numpy as np
 import matplotlib.pyplot as plt
 import seaborn as sns
 from functools import reduce
+```
 
-from sklearn.ensemble import GradientBoostingClassifier, RandomForestClassifier
-from sklearn.tree import DecisionTreeClassifier
-from sklearn.linear_model import LogisticRegression
-from sklearn.model_selection import train_test_split
-from sklearn.metrics import accuracy_score, precision_score, f1_score, recall_score
-'''
+  from sklearn.ensemble import GradientBoostingClassifier, RandomForestClassifier
+  from sklearn.tree import DecisionTreeClassifier
+  from sklearn.linear_model import LogisticRegression
+  from sklearn.model_selection import train_test_split
+  from sklearn.metrics import accuracy_score, precision_score, f1_score, recall_score
+
 
 After importing the libraries, we read in the data, which is given to us in 4 different tables. After taking a look at each one, we clean them up enough to combine together
 
-'''
+```
 df_list = [event_tb, log_tb, resource_tb, severity_tb, train_tb]
 
 for item in df_list:
     print(item.head())
-'''
+```
 
-
-'''
+```
 #Merge the dataframes together
 df = reduce((lambda df1, df2: pd.merge(df1, df2, on='id')), df_list)
-'''
+```
 
 After taking a look at each variable using value counts, we see that each feature is fairly abstract and it's difficult to see at face value what each feature is.
 
@@ -75,50 +76,48 @@ We can see some relationships within each event type or resource type, but no re
 Lets prepare our data for the model by getting dummies on our object columns. After that, we will group our data by ID number, since we want to look at the fault severity at each ID.
 
 
-'''
+```
 data = data.groupby('id', sort = False).sum()
-'''
+```
 
 We separate out our features and target, and run a train_test_split to randomly sample out our data and decide to use the gradient boosting classifier to predict.
 
 
-
-'''
+```
 #The Gradient Boosting Classifier fits our data the best
 gbc_model = gbc.fit(x_train, y_train)
 
 gbc_accuracy = accuracy_score(y_train, gbc.predict(x_train))
 print(gbc_accuracy)
-'''
 
-'''
+
 #setting up prediction probabilities for each row
 y_pred_proba = gbc.predict_proba(x_test)
 y_pred = gbc.predict(x_test)
-'''
+```
 
 After predicting the probability, we want to create an output that is easily readable by our supervisor so that they can send the service techs to the correct locations.
 
-'''
+```
 #Make a DataFrame of the predictions
 result = pd.DataFrame({
     "id": x_test.index,
     "Predicted fault_severity": y_pred,
     "prediction_probability_0": y_pred_proba[:, 0],
     "prediction_probability_1": y_pred_proba[:, 1],
-    "prediction_probability_2": y_pred_proba[:, 2]
-}, columns =['id', 'Predicted fault_severity', "prediction_probability_0",
-            "prediction_probability_1", "prediction_probability_2"])
+    "prediction_probability_2": y_pred_proba[:, 2]},
+    columns =['id', 'Predicted fault_severity', "prediction_probability_0",
+              "prediction_probability_1", "prediction_probability_2"])
 
 result.head(10)
-'''
+```
 
 Next, we sort the values by most likely to have a severe fault.
 
-'''
+```
 result.sort_values(['prediction_probability_2'], ascending= False, inplace= True)
-result.head(20)
-'''
+result.head(20)'
+```
 
 After we get this table, all we need to do is write it to a csv and send it to our boss so the service techs can do their thing!
 

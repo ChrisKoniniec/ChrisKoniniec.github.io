@@ -4,13 +4,16 @@ url: "http://ChrisKoniniec.github.io"    # the protocol and hostname of your sit
 baseurl: "" # the prefix of your site uri, eg. `"/jekyll-theme-EasyBook"` or empty string `""`
 timezone: US Pacific
 description: >
-  One or more sentences introducing this blog.
+  My name is Chris Koniniec and I am interested in data science, statistics,
+  snowboarding, weight lifting, nutrition, cylcing, video games, sci-fi, fantasy,
+  and any combination of those. Enjoy your time here and please reach out to me
+  If you have any questions!
 
 # Your information
 email: ckoninec@gmail.com
 author: Chris Koniniec
 avatar: <img  src = '/assets/ChrisKoniniec_Med.jpg'>
-profile: Hello! Welcome to my site.
+profile: Hello! Welcome to my site. This is where I show my completed projects.
 #twitter_username: twitter_username
 #github_username:  github_username
 profile_links:
