@@ -291,27 +291,27 @@ You can see how the class imbalance plays a large part in the model. While the o
 
 
 Credit Score and Annual Income Imputed with Regression:
-'''
+
 ![Graph9](/assets/Project2/Proj2Graph9.png)
 ![Graph10](/assets/Project2/Proj2Graph10.png)
 ![Graph11](/assets/Project2/Proj2Graph11.png)
-'''
+
 
 
 Current Loan Amount Imputed with Regression:
-'''
+
 ![Graph12](/assets/Project2/Proj2Graph12.png)
 ![Graph13](/assets/Project2/Proj2Graph13.png)
 ![Graph14](/assets/Project2/Proj2Graph14.png)
-'''
+
 
 
 "Class Balanced" by dropping Current Loan Amount:
-'''
+
 ![Graph15](/assets/Project2/Proj2Graph15.png)
 ![Graph16](/assets/Project2/Proj2Graph16.png)
 ![Graph17](/assets/Project2/Proj2Graph17.png)
-'''
+
 
 Still only 44% accurate in correctly predicting if people will NOT pay their loans, only 1% better than the basic model. As mentioned before, this may be fixed with undersampling (the Fully Paid loans) or oversampling (the Charged Off loans).
 
