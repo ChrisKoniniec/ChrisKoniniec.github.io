@@ -3,12 +3,8 @@ title: Chris Koniniec's Data Science Blog
 url: "http://ChrisKoniniec.github.io"    # the protocol and hostname of your site, eg. `http://laobubu.github.io`
 baseurl: "" # the prefix of your site uri, eg. `"/jekyll-theme-EasyBook"` or empty string `""`
 timezone: US Pacific
-description: My name is Chris Koniniec and I am interested in data science,
-statistics, snowboarding, weight lifting, nutrition, cylcing, video games,
-sci-fi, fantasy, and any combination of those. Enjoy your time here and please
-reach out to me if you have any questions!
+description: My name is Chris Koniniec and I am interested in data science, statistics, snowboarding, weight lifting, nutrition, cylcing, video games, sci-fi, fantasy, and any combination of those. Enjoy your time here and please reach out to me if you have any questions!
 
-  "Currently reading: God Emperor of Dune"
 # Your information
 email: ckoninec@gmail.com
 author: Chris Koniniec
