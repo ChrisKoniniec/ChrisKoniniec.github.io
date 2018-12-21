@@ -33,10 +33,7 @@ from sklearn.metrics import accuracy_score, precision_score, f1_score, recall_sc
 The data that we have for this problem is intentionally problem-ridden, so there is much cleaning to be done. Our target variable this time is Loan Status, so we will be sure to keep an eye out for how the other features have an effect on this.
 
 
-```
-#lets take a look at the null values that we have to deal with
-loans.isnull().sum()
-```
+
 
 There are 6 columns with null values that we will have to handle at some point. Lets take a look at their values first. Some we will look at value counts, some we will look at nunique depending on what I think we will end up doing to them.
 
@@ -96,7 +93,7 @@ loans['Credit Score'].describe()
 loans['Loan Status'].value_counts()
 ```
 
-Here we see that our target variable is inbalanced (there are 176,000 fully paid loans and 40,000 unpaid loans). This will create some inaccuracy in our model later. It can be (mostly)solved with undersampling the fully paid loans, or oversampling the unpaid loans. I will not be covering this approach at the current time, but I will be testing a couple different models to see how the imbalance affects our predictions.
+Here we see that our target variable is imbalanced (there are 176,000 fully paid loans and 40,000 unpaid loans). This will create some inaccuracy in our model later. It can be (mostly)solved with undersampling the fully paid loans, or oversampling the unpaid loans. I will not be covering this approach at the current time, but I will be testing a couple different models to see how the imbalance affects our predictions.
 
 ```
 loans['Loan Status'].replace(['Fully Paid', 'Charged Off'], [1,0], inplace = True)
