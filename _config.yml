@@ -8,7 +8,7 @@ description: My name is Chris Koniniec and I am interested in data science, stat
 # Your information
 email: ckoninec@gmail.com
 author: Chris Koniniec
-avatar: <img  src = '/assets/ChrisKoniniec_Med.jpg' width="104" height="142" /img>
+avatar: <img  src = '/assets/ChrisKoniniec_Med.jpg' alt = "https://i.imgur.com/V5B9toV.jpg" width="104" height="142" /img>
 profile: Hello! Welcome to my site. This is where I show my completed projects.
 #twitter_username: twitter_username
 #github_username:  github_username

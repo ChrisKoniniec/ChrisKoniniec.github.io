@@ -80,11 +80,11 @@ Length: 81, dtype: int64
 ```
 
 # Section 1: Data Cleaning
----------------------
+
 Problem:
   - Many null values in many columns
 Solution:
-  - Fill values using data documentation, fill with median(numerical), mode(catagorical)
+  - Fill values using data documentation, fill with median(numerical), mode(categorical)
 
 Problem:
   - String rankings from Excellent to Poor/Na
@@ -146,7 +146,7 @@ df.replace(['Ex', 'Gd', 'TA', 'Fa', 'Po', 'NA'], [5, 4, 3, 2, 1, 0], inplace = T
 ```
 
 # Section 2: Primary Feature Engineering
----------------------
+
 
 Now that we've cleaned up the data feature by feature, we can combine some unnecessary or extraneous features.
 
@@ -181,7 +181,7 @@ df['MSSubClass'] = df['MSSubClass'].astype(str)
 There are also 4 outliers for GrLivArea that need to be dropped in order to show the model a better linear relationship.
 
 # Section 3: Graphs of Data relationships
----------------------
+
 
 Let's take a break from the coding bit and see what we've actually done with our data. We can take a look at the heatmap of the correlations between variables, and then drill down into the ones that have the most interesting relationship with Sale Price.
 
@@ -194,7 +194,7 @@ We can also take a moment to analyze the range and skew of Sale Price.
 We can see that the log of sale price is statistically more normal, so using that would be much easier for our model. This leads us to some more feature engineering!
 
 # Section 4: Further Feature Engineering
----------------------
+
 
 Here we will separate our numerical and categorical (string) features. We check the numerical ones for skew, and if they are over a certain threshold, we use the log of that feature. We also take this opportunity to get dummies on our categoricals, and re-combine the data.
 

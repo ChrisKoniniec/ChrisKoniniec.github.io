@@ -314,7 +314,7 @@ Still only 44% accurate in correctly predicting if people will NOT pay their loa
 
 
 
-Conclusion:
+Conclusion
 ---------------------
 
 Since our assignment was to create questions for the bank to ask a potential customer, we base our questions below on the highest feature importances from our best model above.
