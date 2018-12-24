@@ -27,7 +27,7 @@ from sklearn.model_selection import train_test_split
 from sklearn.metrics import accuracy_score, precision_score, f1_score, recall_score
 ```
 
-# Section 1: Introduction and Basic EDA
+## Section 1: Introduction and Basic EDA
 ---------------------
 
 The data that we have for this problem is intentionally problem-ridden, so there is much cleaning to be done. Our target variable this time is Loan Status, so we will be sure to keep an eye out for how the other features have an effect on this.
@@ -39,7 +39,7 @@ There are 6 columns with null values that we will have to handle at some point. 
 
 
 
-# Section 2: Data Cleaning:
+## Section 2: Data Cleaning:
 ---------------------
 
 After looking through all the variables and their types, below is a list of things that need to be fixed. I will briefly go over how I solved each issue.
@@ -234,7 +234,7 @@ def regressprep(df):
 
 After doing quite a bit of messy work, we have the 4 DataFrames set up for some feature engineering.
 
-# Section 3: Feature Engineering
+## Section 3: Feature Engineering
 ---------------------
 
 ```
@@ -248,7 +248,7 @@ We will create a list of our frames in order to perform the same processes on ea
     * "Debt to Income ratio": ('Monthly Debt' / (('Annual Income' +1) / 12))
     * "Current Available Balance": ('Max Open Credit' -'Current Credit Balance')
 
-# Section 4: Graphs
+## Section 4: Graphs
 ---------------------
 
 Before modeling, here are some graphs to show the reasoning behind the data cleaning and compare the difference between our DataFrames.
@@ -271,7 +271,7 @@ This graph shows why we created a new class '0 Years' for the nulls in Years in 
 
 These graphs compare the differences in imputing Current Loan Amount, graphed against Debt to income ratio and Loan Status. We can see imputing with the mean gives a much more skewed distribution for that class, so that might give our model some trouble generalizing to new data.
 
-# Section 5: Modeling
+## Section 5: Modeling
 ---------------------
 
 This was an extremely time consuming process, but luckily much can be explained by graphs. I will list each model and 3 figures to show assessment: feature importance, class imbalance, and the confusion matrix. The models have been tuned based on the basic dataframe (tuning each one would be far too time consuming).
