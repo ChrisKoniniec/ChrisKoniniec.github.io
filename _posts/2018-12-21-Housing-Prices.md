@@ -185,11 +185,13 @@ There are also 4 outliers for GrLivArea that need to be dropped in order to show
 
 Let's take a break from the coding bit and see what we've actually done with our data. We can take a look at the heatmap of the correlations between variables, and then drill down into the ones that have the most interesting relationship with Sale Price.
 
-### GRAPHS 1 and 2
+
+![Graph1](/assets/Project3/Proj3Graph1.png)
+![Graph2](/assets/Project3/Proj3Graph2.png)
 
 We can also take a moment to analyze the range and skew of Sale Price.
 
-### GRAPH 3
+![Graph3](/assets/Project3/Proj3Graph3.png)
 
 We can see that the log of sale price is statistically more normal, so using that would be much easier for our model. This leads us to some more feature engineering!
 
@@ -243,11 +245,14 @@ Since Ridge and Random Forest perform the best for this problem, we will be focu
 
 Ridge Model:
 
-### GRAPH 4, 5, 6
+![Graph4](/assets/Project3/Proj3Graph4.png)
+![Graph5](/assets/Project3/Proj3Graph5.png)
+![Graph6](/assets/Project3/Proj3Graph6.png)
 
 Random Forest Model:
 
-### GRAPH 7,8
+![Graph7](/assets/Project3/Proj3Graph7.png)
+![Graph8](/assets/Project3/Proj3Graph8.png)
 
 I chose to stay with the Ridge Regressor to predict and submit to Kaggle. After using the predict statement, I made sure to transform the Sale Price back to its original scale with np.expm1.
 

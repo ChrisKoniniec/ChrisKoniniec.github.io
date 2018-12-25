@@ -3,12 +3,16 @@ title: Chris Koniniec's Data Science Blog
 url: "http://ChrisKoniniec.github.io"    # the protocol and hostname of your site, eg. `http://laobubu.github.io`
 baseurl: "" # the prefix of your site uri, eg. `"/jekyll-theme-EasyBook"` or empty string `""`
 timezone: US Pacific
-description: My name is Chris Koniniec and I am interested in data science, statistics, snowboarding, weight lifting, nutrition, cylcing, video games, sci-fi, fantasy, and any combination of those. Enjoy your time here and please reach out to me if you have any questions!
+description: >
+  My name is Chris Koniniec and I am interested in data science,
+  statistics, snowboarding, weight lifting, nutrition, cylcing, video games,
+  sci-fi, fantasy, and any combination of those. Enjoy your time here and please
+  reach out to me if you have any questions!
 
 # Your information
 email: ckoninec@gmail.com
 author: Chris Koniniec
-avatar: <img  src = '/assets/ChrisKoniniec_Med.jpg' alt = "https://i.imgur.com/V5B9toV.jpg" width="104" height="142" /img>
+avatar: <a href="https://i.imgur.com/V5B9toV.jpg" width="104" height="142"</a>
 profile: Hello! Welcome to my site. This is where I show my completed projects.
 #twitter_username: twitter_username
 #github_username:  github_username
