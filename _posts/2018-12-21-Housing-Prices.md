@@ -1,6 +1,6 @@
 ---
 layout: post
-title: Kaggle Competition: Predicting House Prices
+title: Kaggle Competition Predicting House Prices
 nocomments: true
 categories: [python, regression, machine learning, Kaggle]
 ---
