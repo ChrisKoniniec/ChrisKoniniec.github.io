@@ -8,7 +8,7 @@ categories: [python, regression, machine learning, Kaggle]
 Predicting House Prices - Kaggle Competition
 ====================
 
-Hello again! For this project I will be doing a Kaggle competition, the Ames Housing dataset. This is an advanced regression problem that requires a bit of attentive feature engineering, careful data cleaning, and LOTS of time spent analyzing features. As with most of my projects, I will be showing the clean, pretty copy.
+Hello again! For this project I will be doing a Kaggle competition, the Ames Housing dataset. This is an advanced regression problem that requires careful data cleaning, attentive feature engineering, and LOTS of time spent analyzing features. As with most of my projects, I will be showing the clean, pretty copy of my work.
 
 The data itself comes with the training and test sets (test set not containing the target variable - price). We need to combine them in order to do the same transformations on the features, then at the last second we will split them again. There are 80 features that we need to sift through, many of them relating to a similar theme (basement/garage/outdoor space).
 
@@ -83,11 +83,13 @@ Length: 81, dtype: int64
 
 Problem:
   - Many null values in many columns
+
 Solution:
   - Fill values using data documentation, fill with median(numerical), mode(categorical)
 
 Problem:
   - String rankings from Excellent to Poor/Na
+
 Solution:
   - Replace with numerical rankings so we dont have to get dummies on so many columns
 
@@ -233,7 +235,7 @@ target = np.log1p(df.loc[:1459, 'SalePrice'])
 After properly separating our training and test sets out, we focus on the training set for modelling. We use sklearn's train_test_split and assess which regression technique will be best fit for the problem.
 
 ```
-R^2 train  R^2 test  RMSE train  RMSE test
+                  R^2 train  R^2 test  RMSE train  RMSE test
 Linear Regression   0.936612  0.886556    0.098704   0.135246
 Ridge               0.929799  0.912495    0.103873   0.118782
 Lasso               0.000000 -0.013611    0.392042   0.404268
