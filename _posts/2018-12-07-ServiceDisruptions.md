@@ -14,7 +14,7 @@ Each service station has a fault severity of 0 (no issues), 1 (minor issues), or
 
 
 
-```
+```python
 #import libraries
 import pandas as pd
 import numpy as np
@@ -32,7 +32,7 @@ from sklearn.metrics import accuracy_score, precision_score, f1_score, recall_sc
 
 After importing the libraries, we read in the data, which is given to us in 4 different tables. After taking a look at each one, we clean them up enough to combine together
 
-```
+```python
 df_list = [event_tb, log_tb, resource_tb, severity_tb, train_tb]
 
 for item in df_list:
@@ -71,11 +71,11 @@ for item in df_list:
 ```
 
 
-```
+```python
 #Merge the dataframes together
 df = reduce((lambda df1, df2: pd.merge(df1, df2, on='id')), df_list)
 ```
-```
+```python
 df.info()
 
 <class 'pandas.core.frame.DataFrame'>
@@ -123,7 +123,7 @@ We can see some relationships within each event type or resource type, but no re
 Lets prepare our data for the model by getting dummies on our object columns. After that, we will group our data by ID number, since we want to look at the fault severity at each ID.
 
 
-```
+```python
 data = data.groupby('id', sort = False).sum()
 ```
 First, we convert resource_type, severity_type, event_type, and log_feature to string values and use pd.getdummies on them, since we dont want our model to infer direction from different values (resource_type 2 is not higher than 1).
@@ -131,7 +131,7 @@ First, we convert resource_type, severity_type, event_type, and log_feature to s
 We then separate the feature and target variables, and randomly select training and test rows by using sklearn's train_test_split. We then decide to use the gradient boosting classifier to predict to fit to our data and predict.
 
 
-```
+```python
 #The Gradient Boosting Classifier fits our data the best
 gbc_model = gbc.fit(x_train, y_train)
 
@@ -146,7 +146,7 @@ y_pred = gbc.predict(x_test)
 
 After predicting the probability, we want to create an output that is easily readable by our supervisor so that they can send the service techs to the correct locations.
 
-```
+```python
 #Make a DataFrame of the predictions
 result = pd.DataFrame({
     "id": x_test.index,
@@ -162,7 +162,7 @@ result.head(10)
 
 Next, we sort the values by most likely to have a severe fault.
 
-```
+```python
 result.sort_values(['prediction_probability_2'], ascending= False, inplace= True)
 result.head(20)'
 ```

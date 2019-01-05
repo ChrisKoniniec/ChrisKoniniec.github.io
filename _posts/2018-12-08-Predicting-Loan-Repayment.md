@@ -11,7 +11,7 @@ Predicting Loan Repayment
 
 The Business case for this problem is that a bank wants us to generate a list of questions for them to ask potential customers in order to predict whether or not their loans will be repaid.
 
-```
+```python
 #import libraries
 import pandas as pd
 import numpy as np
@@ -72,7 +72,7 @@ After looking through all the variables and their types, below is a list of thin
 
 Some of these values are not just duplicates, but triplets or quadruplets, so we have to sort by LoanID when we drop them.
 
-```
+```python
 loans.drop_duplicates(subset='Loan ID', inplace = True)
 ```
 
@@ -80,7 +80,7 @@ loans.drop_duplicates(subset='Loan ID', inplace = True)
 
 We can fix this with a simple list comprehension
 
-```
+```python
 loans['Credit Score'] = [score/10 if score > 800 for score in loans['Credit Score']]
 
 loans['Credit Score'].describe()
@@ -89,13 +89,13 @@ loans['Credit Score'].describe()
 
 ### 2c: Converting Loan Status to a Binary
 
-```
+```python
 loans['Loan Status'].value_counts()
 ```
 
 Here we see that our target variable is imbalanced (there are 176,000 fully paid loans and 40,000 unpaid loans). This will create some inaccuracy in our model later. It can be (mostly)solved with undersampling the fully paid loans, or oversampling the unpaid loans. I will not be covering this approach at the current time, but I will be testing a couple different models to see how the imbalance affects our predictions.
 
-```
+```python
 loans['Loan Status'].replace(['Fully Paid', 'Charged Off'], [1,0], inplace = True)
 ```
 
@@ -104,7 +104,7 @@ loans['Loan Status'].replace(['Fully Paid', 'Charged Off'], [1,0], inplace = Tru
 
 Currently Monthly Debt has a dollar sign in the front and a comma separating the thousands place.
 
-```
+```python
 loans['Monthly Debt'].replace(to_replace=['\$',','],value=["",""],regex=True, inplace=True)
 loans['Monthly Debt'] = loans['Monthly Debt'].astype(float)
 ```
@@ -125,7 +125,7 @@ All of these misentered loans are also in one group of our target variable (Full
 
  In this specific section, I will impute with the mean.
 
-```
+```python
 nol_filled_loans= non_outlier_loan[non_outlier_loan['Loan Status'] == 1]
 nol_filled_loans_mean = nol_filled_loans['Current Loan Amount'].mean()
 
@@ -141,7 +141,7 @@ If you look in the KDE graphs in Section 4, you will see that filling with the m
 
 This one is a quick fix, there are just two different values for 'Other'
 
-```
+```python
 loans['Purpose'] = loans['Purpose'].str.replace('other', 'Other')
 loans['Purpose'].value_counts()
 ```
@@ -150,7 +150,7 @@ loans['Purpose'].value_counts()
 
 This one is similar, there are two different values for 0, and some odd '#VALUE!'.... values.
 
-```
+```python
 loans['Maximum Open Credit'] = loans['Maximum Open Credit'].replace(to_replace = 0, value = '0')
 
 loans['Maximum Open Credit'].replace(to_replace = '#VALUE!', value = '0', inplace=True)
@@ -162,11 +162,11 @@ loans['Maximum Open Credit'] = loans['Maximum Open Credit'].astype(int)
 
 Here we can see a similar case, there are two values that seem to have the same meaning.
 
-```
+```python
 loans['Home Ownership'].value_counts()
 ```
 
-```
+```python
 loans['Home Ownership'].replace(to_replace = 'HaveMortgage', value = 'Home Mortgage', inplace=True)
 loans['Home Ownership'].value_counts()
 ```
@@ -175,17 +175,17 @@ loans['Home Ownership'].value_counts()
 
 There are about 9,000 nulls in the Years in Current Job column.
 
-```
+```python
 loans['Years in current job'].isnull().sum()
 ```
 
-```
+```python
 loans['Years in current job'].value_counts()
 ```
 
 We are going to fill with '0 years' because the only thing that distinguishes the null values from non is that their Annual Income is much lower. See graph in Section 4 that shows this.
 
-```
+```python
 loans['Years in current job'].fillna(value='0 years', inplace = True)
 ```
 
@@ -193,7 +193,7 @@ loans['Years in current job'].fillna(value='0 years', inplace = True)
 
 There are only a few nulls in these categories, and 0 is an extremely common value, so filling with 0 shouldn't be a problem.
 
-```
+```python
 loans['Bankruptcies'].fillna(value=0, inplace = True)
 loans['Tax Liens'].fillna(value=0, inplace = True)
 ```
@@ -212,7 +212,7 @@ First we will define a function to prep each DataFrame. This will be useful to p
 We will assess the R^2 score and root mean squared error of each model: Linear Regression, Ridge, Lasso, and Random Forest Regressor to see which best fits.
 Spoiler alert: Random Forest works best for Credit Score and Current Loan Amount, and Linear Regression works best for Annual Income.
 
-```
+```python
 def regressprep(df):
     """Prepare a DataFrame for the Regression fill"""
 
@@ -237,7 +237,7 @@ After doing quite a bit of messy work, we have the 4 DataFrames set up for some 
 ## Section 3: Feature Engineering
 ---------------------
 
-```
+```python
 df_list = [loans, df_credit_income_imputed, df_current_loans_imputed, balanced_loans]
 ```
 

@@ -12,7 +12,7 @@ Hello again! For this project I will be doing a Kaggle competition, the Ames Hou
 
 The data itself comes with the training and test sets (test set not containing the target variable - price). We need to combine them in order to do the same transformations on the features, then at the last second we will split them again. There are 80 features that we need to sift through, many of them relating to a similar theme (basement/garage/outdoor space).
 
-```
+```python
 df.isnull().sum()
 
 1stFlrSF            0
@@ -93,7 +93,7 @@ Problem:
 Solution:
   - Replace with numerical rankings so we dont have to get dummies on so many columns
 
-```
+```python
 #Feature Transformation (Changing string to numerical rankings)
 df.replace(['Ex', 'Gd', 'TA', 'Fa', 'Po', 'NA'], [5, 4, 3, 2, 1, 0], inplace = True)
 
@@ -152,7 +152,7 @@ df.replace(['Ex', 'Gd', 'TA', 'Fa', 'Po', 'NA'], [5, 4, 3, 2, 1, 0], inplace = T
 
 Now that we've cleaned up the data feature by feature, we can combine some unnecessary or extraneous features.
 
-```
+```python
 #Create an overall score for the exterior
 df['OverallExterScore'] = df['ExterQual'] + df['ExterCond']
 
@@ -202,7 +202,7 @@ We can see that the log of sale price is statistically more normal, so using tha
 
 Here we will separate our numerical and categorical (string) features. We check the numerical ones for skew, and if they are over a certain threshold, we use the log of that feature. We also take this opportunity to get dummies on our categoricals, and re-combine the data.
 
-```
+```python
 #Splitting numerical and object columns off
 numerical_features = df_train.select_dtypes(exclude='object').columns
 object_features = df_train.select_dtypes(include='object').columns
@@ -234,7 +234,7 @@ target = np.log1p(df.loc[:1459, 'SalePrice'])
 
 After properly separating our training and test sets out, we focus on the training set for modelling. We use sklearn's train_test_split and assess which regression technique will be best fit for the problem.
 
-```
+```python
                   R^2 train  R^2 test  RMSE train  RMSE test
 Linear Regression   0.936612  0.886556    0.098704   0.135246
 Ridge               0.929799  0.912495    0.103873   0.118782
