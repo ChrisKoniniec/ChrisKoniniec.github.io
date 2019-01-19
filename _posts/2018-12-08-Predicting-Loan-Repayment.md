@@ -202,10 +202,10 @@ loans['Tax Liens'].fillna(value=0, inplace = True)
 
 Here we will be filling the 60,000 null values in each of these columns using regression. I will also be segmenting each DataFrame so that we have 4 different options when modeling:
 
-     - "Basic model": Null values in Credit Score + Annual Income dropped, Current Loan Amount imputed with mean
-     - Null values in Credit Score + Annual Income filled with regression, CLA imputed w/ mean
-     - Null values in Credit Score + Annual Income dropped, CLA filled with regression
-     - "Class Balanced": Null Values in Credit Score + Annual Income dropped, CLA dropped
+- "Basic model": Null values in Credit Score + Annual Income dropped, Current Loan Amount imputed with mean
+- Null values in Credit Score + Annual Income filled with regression, CLA imputed w/ mean
+- Null values in Credit Score + Annual Income dropped, CLA filled with regression
+- "Class Balanced": Null Values in Credit Score + Annual Income dropped, CLA dropped
 
 First we will define a function to prep each DataFrame. This will be useful to prep the null DataFrame and then used again to fill a copy of the original dataframe with the predicted values.
 

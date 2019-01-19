@@ -75,6 +75,7 @@ for item in df_list:
 #Merge the dataframes together
 df = reduce((lambda df1, df2: pd.merge(df1, df2, on='id')), df_list)
 ```
+
 ```python
 df.info()
 
@@ -175,6 +176,7 @@ Our predictions with the basic model are decent, but as you can see in the confu
 After some hyperparameter tuning, we can increase this to 63% chance that a 2 is predicted correctly, and nearly 80% chance there is at least a minor issue with the site. Given that the assignment is to give insight into a technician's first assignment of the day, 63% is a considerable increase to chance for very low risk.
 
 Basic GBC Model:
+
 ![Graph6](/assets/Project1/ConfMatrix1.png)
 
 Parameter Tuned GBC:
