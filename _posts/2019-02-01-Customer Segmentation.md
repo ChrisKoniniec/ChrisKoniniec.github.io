@@ -25,6 +25,9 @@ After importing our libraries, we'll read in the data from the single csv file t
 df = pd.read_csv("customers.csv")
 
 df.info()
+```
+<details>
+  <summary>List of features </summary>
 
     <class 'pandas.core.frame.DataFrame'>
     RangeIndex: 24958 entries, 0 to 24957
@@ -105,7 +108,7 @@ df.info()
     Products.family_id               4186 non-null object
     dtypes: float64(32), object(42)
     memory usage: 14.1+ MB
-```
+</details>
 
 As we can see, there are quite a few different kinds of data in this table. Since our first task is to separate our data into categories and write them to a SQL server, we'll see if there's an easy ID number we can use to split everything off.
 
@@ -3354,7 +3357,7 @@ pca_2 = PCA(n_components=2).fit(pca_df)
 print(pca_2.explained_variance_ratio_)
 ```
 
-![Graph1](/assets/Project4/Proj4Graph1.png)
+![Graph1](/assets/Project4/Project4Graph1.png)
 
 Now, we'll create a DataFrame of the principal components and add it to our df2 for later use.
 
@@ -3394,11 +3397,11 @@ K = KMeans(n_clusters = 9).fit(X)
 
 With our cluster fit, it's time to determine the optimal amount of groups for our customers. We will use yellowbrick's clustering visualizers to help out with this. Silhouette scores closer to 1 are better (ranked from 0-1).
 
-![Graph1](/assets/Project4/Proj4Graph2.png)
+![Graph2](/assets/Project4/Project4Graph2.png)
 
-![Graph1](/assets/Project4/Proj4Graph3.png)
-![Graph1](/assets/Project4/Proj4Graph4.png)
-![Graph1](/assets/Project4/Proj4Graph5.png)
+![Graph3](/assets/Project4/Project4Graph3.png)
+![Graph4](/assets/Project4/Project4Graph4.png)
+![Graph5](/assets/Project4/Project4Graph5.png)
 
 According to the graphs, 4 or 5 clusters would be best. We'll choose 4 for now.
 
@@ -3487,10 +3490,10 @@ We will follow the same process to determine cluster labels using PCA.
 K = KMeans(n_clusters = 7).fit(principal_df)
 ```
 
-![Graph1](/assets/Project4/Proj4Graph6.png)
-![Graph1](/assets/Project4/Proj4Graph7.png)
-![Graph1](/assets/Project4/Proj4Graph8.png)
-![Graph1](/assets/Project4/Proj4Graph9.png)
+![Graph6](/assets/Project4/Project4Graph6.png)
+![Graph7](/assets/Project4/Project4Graph7.png)
+![Graph8](/assets/Project4/Project4Graph8.png)
+![Graph9](/assets/Project4/Project4Graph9.png)
 
 According to the graphs, 3 clusters is best for the PCA model.
 
