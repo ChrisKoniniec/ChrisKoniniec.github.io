@@ -163,18 +163,18 @@ Now comes the fun part of EDA. Taking a look at graphs to try and tease out tren
 
 The first thing that we'll look at is the rate of device failures across the duration of the study.
 
-![Graph1](/assets/Project5/Project5Graph1.png)
+![Graph1](/assets/Project5/Proj5Graph1.png)
 
 So we can see that there are more TOTAL failures in January 2015, but the overall RATE of failure (failure/ number of shipments) had a larger spike at the end of October 2015, around 3% failure rate. As we can see below, this means that there are some seasonality differences of shipments.
 
-![Graph2](/assets/Project5/Project5Graph2.png)
+![Graph2](/assets/Project5/Proj5Graph2.png)
 
 
 ### General Distribution Comparisons
 
 Since our target is not normally distributed, I wanted to take a closer look at how close it is to a Poisson distribution, which is used when you know how many events to expect in a certain time frame, but the time between events is independent.
 
-![Graph3](/assets/Project5/Project5Graph3.png)
+![Graph3](/assets/Project5/Proj5Graph3.png)
 
 We can see it follows the same trend of a Poisson distribution but of course it's not perfect.
 
@@ -189,12 +189,12 @@ working_devices = vis_data[vis_data['failure'] == 0]
 
 After taking a sum of the categorical codes that we specified earlier, we can see if certain codes have 'comorbidity', the presence of an attribute means a higher chance of other attributes also being present. So we would expect if there is no comorbidity, the difference between the presence of an attribute would be exactly 1 'total code'.
 
-![Graph4](/assets/Project5/Project5Graph4.png)
+![Graph4](/assets/Project5/Proj5Graph4.png)
 
 
 After looking at this, I wanted to see if there was an effect of seasonality as well. The graph below is the same as above with an extra variable (season) also shown.
 
-![Graph5](/assets/Project5/Project5Graph5.png)
+![Graph5](/assets/Project5/Proj5Graph5.png)
 
 This graph is useful for showing the seasonality of each attribute in failed devices. For example, we see that attribute 2, 3, and 9 rarely occur in the fall. This could be due to the low sample size of those fall failures.
 
@@ -382,6 +382,8 @@ I accomplished this by grouping the devices by failure/non-failure, tagging the 
 </table>
 </div>
 
+#Step 2: Building the Model
+
 ## Creating the Model DataFrame
 
 ```python
@@ -455,7 +457,8 @@ I created 5 pipelines and compared metrics between them, an example of the best 
 
 ```python
 #Train/Test/Split
-X_train, X_test, y_train, y_test = train_test_split(features, target, test_size = .3, stratify=target, random_state = 42)
+X_train, X_test, y_train, y_test = train_test_split(features, target, test_size = .3,
+stratify=target, random_state = 42)
 
 # Pipeline here
 gbc_pipeline2.fit(X_train, y_train)
@@ -465,47 +468,36 @@ y_pred = gbc_pipeline2.predict(X_test)
 
 print(classification_report(y_test, y_pred))
 ```
-Then we run each pipeline through Yellowbrick's
+
+Then we run each pipeline through Yellowbrick's classification report, confusion matrix, and ROCAUC functionalities.
 ```python
 #YellowBrick Classification report
 
 visualizer = ClassificationReport(gbc_pipeline2, classes=classes)
-
-visualizer.fit(X_train, y_train)
-visualizer.score(X_test, y_test)
-g = visualizer.poof()
-
-#Looking for max recall: “for all instances that were actually positive, what percent was classified correctly?”
 ```
 
-![Graph6](/assets/Project5/Project5Graph6.png)
+Since our objective is to predict which devices will fail on the next trip, the metric we want to focus on here is the Recall for failed devices.
+
+![Graph6](/assets/Project5/Proj5Graph6.png)
 
 ```python
 #Confusion Matrix
 cm = ConfusionMatrix(gbc_pipeline2, classes=[0,1])
-
-# Fit fits the passed model.
-cm.fit(X_train, y_train)
-cm.score(X_test, y_test)
-
-# How did we do?
-cm.poof()
 ```
+![Graph7](/assets/Project5/Proj5Graph7.png)
 
-![Graph7](/assets/Project5/Project5Graph7.png)
+In the confusion matrix, we can see that we correctly classify 22/32 failed devices. This is useful for getting a sense of how our algorithm would classify in a real study and spread of the data.
 
 ```python
 #Yellowbrick ROC/AUC
 
 visualizer = ROCAUC(gbc_pipeline2, classes=classes)
-
-visualizer.fit(X_train, y_train)
-visualizer.score(X_test, y_test)  
-g = visualizer.poof()
 ```
-![Graph8](/assets/Project5/Project5Graph8.png)
+![Graph8](/assets/Project5/Proj5Graph8.png)
 
-## Final Check!
+The ROC AUC curve shows how well the algorithm can distinguish between when a failed device and functioning device. That means our model is 87% sure that it can distinguish between the classes.
+
+# Conclusion
 
 ```python
 # Final test with whole dataset:
@@ -516,10 +508,9 @@ cm = ConfusionMatrix(gbc_pipeline2, classes=[0,1])
 # Fit fits the passed model.
 cm.fit(X_train, y_train)
 cm.score(features, target)
-
-# How did we do?
-cm.poof()
-
-#69% correct at guessing if a device will fail. Not bad
 ```
-![Graph9](/assets/Project5/Project5Graph9.png)
+![Graph9](/assets/Project5/Proj5Graph9.png)
+
+Our goal was to create a machine learning model to predict if a vehicle would fail on it's next trip based on data from a telemetry device. Using this model, the company can now catch 94 out of every 106 devices that fails . This will increase the company's rate of successfully completed trips, increasing their revenue in multiple ways (saving towing costs, better customer relations).
+
+Thank you for taking the time to read through this project and if you have any questions or concerns please dont hesitate to reach out via email!
