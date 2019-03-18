@@ -476,9 +476,9 @@ Then we run each pipeline through Yellowbrick's classification report, confusion
 visualizer = ClassificationReport(gbc_pipeline2, classes=classes)
 ```
 
-Since our objective is to predict which devices will fail on the next trip, the metric we want to focus on here is the Recall for failed devices.
-
 ![Graph6](/assets/Project5/Proj5Graph6.png)
+
+Since our objective is to predict which devices will fail on the next trip, the metric we want to focus on here is the Recall for failed devices.
 
 ```python
 #Confusion Matrix
