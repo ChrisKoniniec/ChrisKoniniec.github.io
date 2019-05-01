@@ -9,8 +9,8 @@ categories: [python, Google, GCP, SQL, ETL, BeautifulSoup]
 
 Hello and welcome to another project. This one is a bit different than my previous projects and will deal with using Google Cloud Platform for creating and maintaining a data set that we can then use for reporting and analysis. By the time this project is complete, it will show a full-stack data science project using real world tools.
 
-Things to do as of 4/30:
-  - Write tests for extraction function
+Things to do as of 4/30/19:
+  - Write tests for extraction function (make sure we're not writing in duplicates or nulls)
   - Write transformation and analytics program
 
 Overall Steps:
@@ -215,4 +215,4 @@ Well first, we extracted the daily top articles from 7 news organizations. If my
 
 The next step from here is to write a python program that will load the information from this database, extract entities and sentiment using NLP package(s), and show a report that compares news orgs based on these criteria. I may even add the entity and sentiment features into the extraction code, I'll have to play around with it. Then the final step would be automating this whole process using a scheduled Compute Engine.
 
-As always, please don't hesitate to reach out to me via email with any questions, concerns, or problems with my work! I am very open to criticism and really excited to learn things that would make my projects more efficiently.
+As always, please don't hesitate to reach out to me via email with any questions, concerns, or problems with my work! I am very open to constructive criticism and really excited to learn things that would make my projects more efficiently.
