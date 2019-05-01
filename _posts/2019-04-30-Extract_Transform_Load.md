@@ -147,43 +147,43 @@ after typing in your database password as well, you will be able to write whatev
 
 ```SQL
 CREATE TABLE al_jazeera_eng_db (
-	id serial PRIMARY KEY,
+	id serial,
 	title CHAR(255),
 	content TEXT,
 	date_collected DATE);
 
 CREATE TABLE bbc_db (
-	id serial PRIMARY KEY,
+	id serial,
 	title CHAR(255),
 	content TEXT,
 	date_collected DATE);
 
 CREATE TABLE american_conservative_db (
-	id serial PRIMARY KEY,
+	id serial,
 	title CHAR(255),
 	content TEXT,
 	date_collected DATE);
 
 CREATE TABLE associated_press_db (
-	id serial  PRIMARY KEY,
+	id serial,
 	title CHAR(255),
 	content TEXT,
 	date_collected DATE);
 
 CREATE TABLE cnn_db (
-	id serial  PRIMARY KEY,
+	id serial,
 	title CHAR(255),
 	content TEXT,
 	date_collected DATE);
 
 CREATE TABLE cbs_db (
-	id serial  PRIMARY KEY,
+	id serial,
 	title CHAR(255),
 	content TEXT,
 	date_collected DATE);
 
 CREATE TABLE laist_db (
-	id serial PRIMARY KEY,
+	id serial,
 	title CHAR(255),
 	content TEXT,
 	date_collected DATE);
