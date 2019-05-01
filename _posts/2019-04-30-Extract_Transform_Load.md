@@ -9,10 +9,6 @@ categories: [python, Google, GCP, SQL, ETL, BeautifulSoup]
 
 Hello and welcome to another project. This one is a bit different than my previous projects and will deal with using Google Cloud Platform for creating and maintaining a data set that we can then use for reporting and analysis. By the time this project is complete, it will show a full-stack data science project using real world tools.
 
-Things to do as of 4/30/19:
-  - Write tests for extraction function (make sure we're not writing in duplicates or nulls)
-  - Write transformation and analytics program
-
 Overall Steps:
 1. Extract the data from our inputs (webpages, APIs, on-site tables) using a python script on a Compute Engine, and load them into a Google Cloud bucket.
 2. From the bucket, load the data into a CloudSQL database for more permanent storage.
@@ -138,13 +134,14 @@ Once you create a GCP account, navigate to the "SQL" section using the side bar.
 
 ![Graph2](/assets/Project6/GCP_SQL_inst.png)
 
-![Graph3](/assets/Project6/GCP_SQL_Create.png)
+![Graph3](/assets/Project6/GCP_SQL_create.png)
 
 After setting up the database(and saving all the information relating to it in a text file for reference later), we have a couple options we can use to create the tables we will be filling.
 
 The first option: In your database "overview" tab, scroll down and click "Connect using Cloud Shell". Once resources are provisioned, type:
-
+```
 gcloud sql connect [YOUR INSTANCE NAME] --user=[YOUR DATABASE NAME] --quiet
+```
 
 after typing in your database password as well, you will be able to write whatever queries you want from your database, including CREATE statements. Mine looks like this:
 
@@ -214,5 +211,9 @@ This project is well and good for showing experience with setting up and writing
 Well first, we extracted the daily top articles from 7 news organizations. If my task were to gather these resources manually, you could imagine how long that part would take. Then, we copied them over to our personal database. Doing this manually on GCP using the upload/import buttons would take about 10 minutes of supervised clicking, but using Cloud SDK we can just copy our 8 lines of code over and have it done. Nifty! All-in-all, if this were a daily task, it would save us about 15-30 minutes of doing this process manually.
 
 The next step from here is to write a python program that will load the information from this database, extract entities and sentiment using NLP package(s), and show a report that compares news orgs based on these criteria. I may even add the entity and sentiment features into the extraction code, I'll have to play around with it. Then the final step would be automating this whole process using a scheduled Compute Engine.
+
+Things to do as of 4/30/19:
+  - Write tests for extraction function (make sure we're not writing in duplicates or nulls)
+  - Write transformation and analytics program
 
 As always, please don't hesitate to reach out to me via email with any questions, concerns, or problems with my work! I am very open to constructive criticism and really excited to learn things that would make my projects more efficiently.
