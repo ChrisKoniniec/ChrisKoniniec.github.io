@@ -9,6 +9,8 @@ categories: [python, Google, GCP, SQL, ETL, BeautifulSoup]
 
 Hello and welcome to another project. This one is a bit different than my previous projects and will deal with using Google Cloud Platform for creating and maintaining a data set that we can then use for reporting and analysis. By the time this project is complete, it will show a full-stack data science project using real world tools.
 
+Update 5/2: Added sentiment analysis graphs to make this project a little better to look at!
+
 Overall Steps:
 1. Extract the data from our inputs (webpages, APIs, on-site tables) using a python script on a Compute Engine, and load them into a Google Cloud bucket.
 2. From the bucket, load the data into a CloudSQL database for more permanent storage.
@@ -123,18 +125,129 @@ for i in np.arange(len(links)):
 
 Once we have the data in the format we want, we can then load it into our CloudSQL database.
 
-## Step 2: Set up your CloudSQL Database
+### Step 1.5 Sentiment Analysis
+
+After a bit of deliberation as to when I should add in the sentiment analysis and entity extraction bits, I decided on the extraction phase. It will not add that much data, so the upload would not be hindered in any way, plus I can test out some of the analytics that I want to show.
+
+We can easily add a sentiment column to each table with this function
+```python
+from nltk.sentiment.vader import SentimentIntensityAnalyzer
+
+sia = SentimentIntensityAnalyzer()
+
+def sentiment_column(news_table):
+    news_table['sentiment'] = [sia.polarity_scores(x) for x in news_table['content']]
+    return news_table
+```
+
+Each element in the sentiment column will be a dict of the sentiment values (negative/neutral/positive/compound) that we can easily extract out using another function.
+
+```python
+#we need to get the sentiment analysis for each org into a forms that we can graph
+def sentiment_tables(column):
+    """Given a pandas Series of sentiment values, return a DataFrame of sentiment values and overall sentiment"""
+    sent_table = pd.DataFrame(list(column))
+    overall_sent = sent_table.mean()
+
+    return sent_table, overall_sent
+```
+
+After a bit more hacking, we can easily see the overall average sentiment for each news organization on a given day.
+
+<div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>compound</th>
+      <th>neg</th>
+      <th>neu</th>
+      <th>pos</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>LAist</th>
+      <td>-0.085475</td>
+      <td>0.0652</td>
+      <td>0.873850</td>
+      <td>0.061050</td>
+    </tr>
+    <tr>
+      <th>Al Jazeera En</th>
+      <td>-0.509533</td>
+      <td>0.2650</td>
+      <td>0.691667</td>
+      <td>0.043333</td>
+    </tr>
+    <tr>
+      <th>CBS</th>
+      <td>-0.118710</td>
+      <td>0.0839</td>
+      <td>0.846300</td>
+      <td>0.069800</td>
+    </tr>
+    <tr>
+      <th>Amer Conserv</th>
+      <td>0.037500</td>
+      <td>0.0842</td>
+      <td>0.819200</td>
+      <td>0.096700</td>
+    </tr>
+    <tr>
+      <th>CNN</th>
+      <td>-0.048070</td>
+      <td>0.0731</td>
+      <td>0.873200</td>
+      <td>0.053900</td>
+    </tr>
+    <tr>
+      <th>Assoc Press</th>
+      <td>-0.300620</td>
+      <td>0.1185</td>
+      <td>0.819400</td>
+      <td>0.062000</td>
+    </tr>
+    <tr>
+      <th>BBC</th>
+      <td>-0.259020</td>
+      <td>0.1609</td>
+      <td>0.791100</td>
+      <td>0.048000</td>
+    </tr>
+  </tbody>
+</table>
+</div>
+
+![Graph1](/assets/Project6/Proj6Graph1.png)
+
+Once we're done playing around here we can load the data into a SQL database for storage.
+
+## Step 2: Set up the CloudSQL Database
 
 GENERAL NOTE: The Google Cloud documentation is fairly difficult to navigate, have patience and keep in mind what task it is that you need to accomplish and you will succeed.
 
 Once you create a GCP account, navigate to the "SQL" section using the side bar. Click the "Create Instance" button near the top of the page, I used a PostgreSQL database for this project. Make sure to save the information you input (including the password) in a text file somewhere.
 
 
-![Graph1](/assets/Project6/SQL_nav.png)
+![Graph2](/assets/Project6/SQL_nav.png)
 
-![Graph2](/assets/Project6/GCP_SQL_inst.png)
+![Graph3](/assets/Project6/GCP_SQL_inst.png)
 
-![Graph3](/assets/Project6/GCP_SQL_create.png)
+![Graph4](/assets/Project6/GCP_SQL_create.png)
 
 After setting up the database(and saving all the information relating to it in a text file for reference later), we have a couple options we can use to create the tables we will be filling.
 
@@ -197,7 +310,7 @@ At this point, there are many ways to proceed, and Google Cloud documentation ma
 
 1. Save files to CSV on current hard drive
 
-![Graph4](/assets/Project6/CSVs_in_folder.png)
+![Graph5](/assets/Project6/CSVs_in_folder.png)
 
 2. Use Google Cloud SDK to copy files from current hard drive to Bucket
 3. Use Google Cloud SDK to copy files from bucket to their respective table in CloudSQL
