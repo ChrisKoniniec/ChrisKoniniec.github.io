@@ -9,7 +9,7 @@ categories: [python, Google, GCP, SQL, ETL, BeautifulSoup]
 
 Hello and welcome to another project. This one is a bit different than my previous projects and will deal with using Google Cloud Platform for creating and maintaining a data set that we can then use for reporting and analysis. By the time this project is complete, it will show a full-stack data science project using real world tools.
 
-Update 5/2: Added sentiment analysis graphs to make this project a little better to look at!
+Update 5/6/19: Added sentiment analysis graphs to make this project a little better to look at!
 
 Overall Steps:
 1. Extract the data from our inputs (webpages, APIs, on-site tables) using a python script on a Compute Engine, and load them into a Google Cloud bucket.
@@ -152,7 +152,7 @@ def sentiment_tables(column):
     return sent_table, overall_sent
 ```
 
-After a bit more hacking, we can easily see the overall average sentiment for each news organization on a given day.
+After a bit more hacking, we can easily see the overall average sentiment for each news organization on a given day. This particular data is from 5/6/19.
 
 <div>
 <style scoped>
@@ -240,12 +240,16 @@ Once we're done playing around here we can load the data into a SQL database for
 
 GENERAL NOTE: The Google Cloud documentation is fairly difficult to navigate, have patience and keep in mind what task it is that you need to accomplish and you will succeed.
 
-Once you create a GCP account, navigate to the "SQL" section using the side bar. Click the "Create Instance" button near the top of the page, I used a PostgreSQL database for this project. Make sure to save the information you input (including the password) in a text file somewhere.
+Once you create a GCP account, navigate to the "SQL" section using the side bar.
 
 
 ![Graph2](/assets/Project6/SQL_nav.png)
 
+Click the "Create Instance" button near the top of the page, I used a PostgreSQL database for this project.
+
 ![Graph3](/assets/Project6/GCP_SQL_inst.png)
+
+ Make sure to save the information you input (including the password) in a text file somewhere.
 
 ![Graph4](/assets/Project6/GCP_SQL_create.png)
 
