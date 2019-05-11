@@ -7,9 +7,11 @@ categories: [python, Google, GCP, SQL, ETL, BeautifulSoup]
 
 # ETL Process Mock-Up
 
-Hello and welcome to another project. This one is a bit different than my previous projects and will deal with using Google Cloud Platform for creating and maintaining a data set that we can then use for reporting and analysis. By the time this project is complete, it will show a full-stack data science project using real world tools.
+Hello and welcome to another project. This one is a bit different than my previous projects and will deal with using Google Cloud Platform for creating and maintaining a data set that we can then use for reporting and analysis. By the time this project is complete, it will show a full-stack data science project using cloud tools.
 
 Update 5/6/19: Added sentiment analysis graphs to make this project a little better to look at!
+
+Update 5/10/19: Changed create_news_table functions to check for nulls and duplicates. Ideally we will be checking for duplicates when uploading to the database.
 
 Overall Steps:
 1. Extract the data from our inputs (webpages, APIs, on-site tables) using a python script on a Compute Engine, and load them into a Google Cloud bucket.
@@ -20,7 +22,7 @@ This is a basic ETL process that is suited for businesses that need to:
 - load and update their data infrequently (once a day or so)  
 - have data on the order of GigaBytes.
 
-In the situation that the business needs to stream their data, we could use Cloud Dataflow. If the business requires much larger storage capabilities, we could use BigQuery or BigTable to modify our framework.
+We could modify our framework slightly depending on the project. If the business needs to stream their data we could use Cloud Dataflow, and if much larger storage capabilities are needed we could use BigQuery or BigTable.
 
 Our specific task today is to take a look at some different news organizations and see how they differ in their overall sentiment, and what kinds of stories they talk about. We will then generate a report that tracks their sentiment over time.
 
@@ -54,6 +56,18 @@ def create_news_table(source):
 
         #join the new record to the empty dataframe
         news_top_articles = pd.concat([news_top_articles, news_top_article])
+
+        #only want the date so that SQL will take it
+        news_top_articles['date_collected']= news_top_articles['date_collected'].map(lambda x: str(x)[:10])
+
+        #dropping incomplete or duplicate information that may come into the table
+        news_top_articles.dropna(inplace=True)
+        news_top_articles.drop_duplicates(inplace=True)
+        news_top_articles.reset_index(drop = True, inplace=True)
+
+
+        #unit tests
+        assert news_top_articles.content.notnull().all()
 
     return news_top_articles
 ```
@@ -120,7 +134,13 @@ for i in np.arange(len(links)):
     article.columns = laist_top_articles.columns
     #Construct the DataFrame
     laist_top_articles = pd.concat([laist_top_articles, article])
+    #dropping incomplete or duplicate information that may come into the table
+    laist_top_articles.dropna(inplace=True)
+    laist_top_articles.drop_duplicates(inplace=True)
     laist_top_articles.reset_index(drop = True, inplace=True)
+
+    #unit tests
+    assert laist_top_articles.content.notnull().all()
 ```
 
 Once we have the data in the format we want, we can then load it into our CloudSQL database.

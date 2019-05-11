@@ -2,7 +2,7 @@
 layout: post
 title: Building a Predictive Maintenance Model
 nocomments: true
-categories: [python, supervised, machine learning, imbalanced classes]
+categories: [python, supervised, machine learning, imbalanced classes, dataviz]
 ---
 
 Building a Predictive Maintenance Model

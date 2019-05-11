@@ -2,7 +2,7 @@
 layout: post
 title: Customer Segmentation with KMeans
 nocomments: true
-categories: [python, unsupervised, machine learning, clustering, PCA]
+categories: [python, unsupervised, machine learning, clustering, PCA, dataviz]
 ---
 
 Customer Segmentation

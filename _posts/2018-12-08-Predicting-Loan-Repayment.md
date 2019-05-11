@@ -2,7 +2,7 @@
 layout: post
 title: Predicting Loan Repayment
 nocomments: true
-categories: [python, classification, machine learning, gradient boosting]
+categories: [python, classification, machine learning, gradient boosting, dataviz]
 ---
 
 Predicting Loan Repayment
