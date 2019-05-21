@@ -13,6 +13,8 @@ Update 5/6/19: Added sentiment analysis graphs to make this project a little bet
 
 Update 5/10/19: Changed create_news_table functions to check for nulls and duplicates. Ideally we will be checking for duplicates when uploading to the database.
 
+Update 5/20/19: Added entity extraction functions for writing to the news org dataframe as well as for separate analysis.
+
 Overall Steps:
 1. Extract the data from our inputs (webpages, APIs, on-site tables) using a python script on a Compute Engine, and load them into a Google Cloud bucket.
 2. From the bucket, load the data into a CloudSQL database for more permanent storage.
@@ -145,7 +147,7 @@ for i in np.arange(len(links)):
 
 Once we have the data in the format we want, we can then load it into our CloudSQL database.
 
-### Step 1.5 Sentiment Analysis
+### Step 1.5 Sentiment Analysis and Entity Extraction
 
 After a bit of deliberation as to when I should add in the sentiment analysis and entity extraction bits, I decided on the extraction phase. It will not add that much data, so the upload would not be hindered in any way, plus I can test out some of the analytics that I want to show.
 
@@ -253,6 +255,275 @@ After a bit more hacking, we can easily see the overall average sentiment for ea
 </div>
 
 ![Graph1](/assets/Project6/Proj6Graph1.png)
+
+The entity extraction is a little more tricky to pull off since each entity is a Spacy token object, but we can use an apply method in order to get what we need.
+
+```python
+# Function to extract entities from an article
+def extract_entities(content):
+    nlp_content = nlp(content)
+    items = [x.text for x in nlp_content.ents]
+    return items
+
+#Function to create a new column of entities
+def entity_column(news_table):
+    news_table['entities'] = news_table['content'].apply(extract_entities)
+    return news_table
+```
+Once we add the entity column to each news org dataframe that we'll save later, we create separate tables to drill down into each news org's entities using the following nifty functions.
+
+```python
+def extract_ent_dict(content):
+  '''Function to extract entities and labels from an article and store them in a dict'''
+    nlp_content = nlp(content)
+    text_label_dict = {x.text : x.label_ for x in nlp_content.ents}
+    return text_label_dict
+
+def entity_table(news_table):
+  '''Function to create a Dataframe for daily entities that a news org is talking about'''
+    # Create an empty dataframe with the column titles for the info we want
+    org_ent_table = pd.DataFrame(columns = ['entities', 'labels'])
+
+    # extract the entities for each article (this returns a list of dictionaries)
+    news_entity_article = [extract_ent_dict(x) for x in news_table['content']]
+
+    # Looping through the dict, make a dataframe of ents and labels for each article and append to larger DF
+    for i in range(len(news_table['content'])):
+
+        article_ent_table = pd.DataFrame.from_dict(news_entity_article[i], orient='index')
+        article_ent_table = article_ent_table.reset_index()
+        article_ent_table.columns = ['entities', 'labels']
+
+        org_ent_table = pd.concat([org_ent_table, article_ent_table])
+
+    org_ent_table.reset_index(inplace=True, drop=True)
+    return org_ent_table
+```
+The table below is an example of the output of the entity_table function for the BBC on 5/16/19
+
+<div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>entities</th>
+      <th>labels</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>0</th>
+      <td>Louvre</td>
+      <td>GPE</td>
+    </tr>
+    <tr>
+      <th>1</th>
+      <td>Paris</td>
+      <td>GPE</td>
+    </tr>
+    <tr>
+      <th>2</th>
+      <td>aged 102</td>
+      <td>DATE</td>
+    </tr>
+    <tr>
+      <th>3</th>
+      <td>Alabama</td>
+      <td>GPE</td>
+    </tr>
+    <tr>
+      <th>4</th>
+      <td>Missouri</td>
+      <td>GPE</td>
+    </tr>
+    <tr>
+      <th>5</th>
+      <td>eight weeks</td>
+      <td>DATE</td>
+    </tr>
+    <tr>
+      <th>6</th>
+      <td>US</td>
+      <td>GPE</td>
+    </tr>
+    <tr>
+      <th>7</th>
+      <td>Kit Harington</td>
+      <td>PERSON</td>
+    </tr>
+    <tr>
+      <th>8</th>
+      <td>Jon Snow</td>
+      <td>PERSON</td>
+    </tr>
+    <tr>
+      <th>9</th>
+      <td>HBO</td>
+      <td>ORG</td>
+    </tr>
+    <tr>
+      <th>10</th>
+      <td>season eight</td>
+      <td>DATE</td>
+    </tr>
+    <tr>
+      <th>11</th>
+      <td>Image copyrightAFP/Getty ImagesImage</td>
+      <td>PERSON</td>
+    </tr>
+    <tr>
+      <th>12</th>
+      <td>Taliban</td>
+      <td>ORG</td>
+    </tr>
+    <tr>
+      <th>13</th>
+      <td>Afghanistan</td>
+      <td>GPE</td>
+    </tr>
+    <tr>
+      <th>14</th>
+      <td>2001</td>
+      <td>DATE</td>
+    </tr>
+    <tr>
+      <th>15</th>
+      <td>Trump</td>
+      <td>PERSON</td>
+    </tr>
+    <tr>
+      <th>16</th>
+      <td>first</td>
+      <td>ORDINAL</td>
+    </tr>
+    <tr>
+      <th>17</th>
+      <td>a month</td>
+      <td>DATE</td>
+    </tr>
+    <tr>
+      <th>18</th>
+      <td>Theresa</td>
+      <td>PERSON</td>
+    </tr>
+    <tr>
+      <th>19</th>
+      <td>May</td>
+      <td>DATE</td>
+    </tr>
+    <tr>
+      <th>20</th>
+      <td>Parliament</td>
+      <td>ORG</td>
+    </tr>
+    <tr>
+      <th>21</th>
+      <td>Brexit</td>
+      <td>GPE</td>
+    </tr>
+    <tr>
+      <th>22</th>
+      <td>the first week of June</td>
+      <td>DATE</td>
+    </tr>
+    <tr>
+      <th>23</th>
+      <td>Mikella</td>
+      <td>PERSON</td>
+    </tr>
+    <tr>
+      <th>24</th>
+      <td>Alsou</td>
+      <td>PERSON</td>
+    </tr>
+    <tr>
+      <th>25</th>
+      <td>Azerbaijan</td>
+      <td>GPE</td>
+    </tr>
+    <tr>
+      <th>26</th>
+      <td>Russian</td>
+      <td>NORP</td>
+    </tr>
+    <tr>
+      <th>27</th>
+      <td>The Voice Kids - has</td>
+      <td>WORK_OF_ART</td>
+    </tr>
+    <tr>
+      <th>28</th>
+      <td>thousands</td>
+      <td>CARDINAL</td>
+    </tr>
+    <tr>
+      <th>29</th>
+      <td>copyrightAFPImage</td>
+      <td>CARDINAL</td>
+    </tr>
+    <tr>
+      <th>30</th>
+      <td>Huawei</td>
+      <td>GPE</td>
+    </tr>
+    <tr>
+      <th>31</th>
+      <td>China</td>
+      <td>GPE</td>
+    </tr>
+    <tr>
+      <th>32</th>
+      <td>US</td>
+      <td>GPE</td>
+    </tr>
+    <tr>
+      <th>33</th>
+      <td>Chinese</td>
+      <td>NORP</td>
+    </tr>
+    <tr>
+      <th>34</th>
+      <td>New Yorkers</td>
+      <td>NORP</td>
+    </tr>
+    <tr>
+      <th>35</th>
+      <td>Bill de Blasio's</td>
+      <td>PERSON</td>
+    </tr>
+    <tr>
+      <th>36</th>
+      <td>New York</td>
+      <td>GPE</td>
+    </tr>
+    <tr>
+      <th>37</th>
+      <td>Bill de Blasio</td>
+      <td>PERSON</td>
+    </tr>
+    <tr>
+      <th>38</th>
+      <td>Democrat</td>
+      <td>NORP</td>
+    </tr>
+  </tbody>
+</table>
+</div>
+
+From here, we can select the specific kinds of entities (People, Organizations) and compare what types of things that different news organizations are talking about. Graphs on this are a little uninformative unless you want to look at a specific event on a certain day. Soon, I will have some very informative graphs involving time series of what different news organizations are talking about since my data collection started.
 
 Once we're done playing around here we can load the data into a SQL database for storage.
 
